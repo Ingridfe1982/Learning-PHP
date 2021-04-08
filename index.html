@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <title>Vue Project</title>
+    <title>Vue Project - commercial interface</title>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,19 +17,27 @@
       <nav>
         <div class="nav-container">
           <div id="logo">
-            <img src="./assets/img/wish-logo-800.png" alt="logo" />
+            <router-link to = "/">
+                <img src="./assets/img/wish-logo-800.png" alt="logo" />
+            </router-link>
           </div>
 
           <ul id="icons">
             <li>
-              <i class="fas fa-user"></i>
+                <router-link to = "/user-settings">
+                    <i class="fas fa-user"></i>
+                </router-link>
             </li>
             <li>
-              <i class="fas fa-heart"></i>
-              <span id="nav-notif"></span>
+                <router-link to = "/wish-list">
+                    <i class="fas fa-heart"></i>
+                    <span id="nav-notif"></span>
+                </router-link>
             </li>
             <li>
-              <i class="fas fa-shopping-cart"></i>
+                <router-link to = "/shopping-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                </router-link>
             </li>
           </ul>
         </div>
@@ -38,13 +46,64 @@
       <router-view></router-view>
     </div>
 
+        <script type="text/x-template" id="home">
+            <div class="home-container">
+                <h1>Articles</h1>
+                <!-- search display-->
+                <input v-model="searchKey" type="search" id="search" placeholder="Rechercher..." autocomplete="off">
+                <span v-if= "searchKey && filteredList.length >= 1">
+                    {{ filteredList.length }} résultat<span v-if="filteredList.length >= 2">s</span>
+                </span>
+                <!-- cards display -->
+                <div class="card-cart-container">
+                    <div class="card-container">
+                        <div v-for="product in filteredList" class="card">
+
+                            <div class="img-container">
+                                <img v-bind:src="product.img" alt="">
+                            </div>
+
+                            <div class="card-text">
+                                <h3>{{ product.description }}</h3>
+                                <span>{{ product.price }}€</span>
+                            </div>
+
+                            <div class="card-icons">
+
+                                <div class="like-container">
+                                    <input 
+                                    type="checkbox"
+                                    name="checkbox"
+                                    v-bind:id="product.id"
+                                    />
+                                    <label v-bind:for="product.id">
+                                        <i class="fas fa-heart"></i>
+                                    </label>
+                                </div>
+
+                                <div class="add-to-cart">
+                                    <button>
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </script>
+
         <!-- Appel instance de Vue -->
-        <script src="https://cdn.jsdeliver.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <!-- Appel le router Vue -->
         <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
         <!-- Lis le fichier vue.js -->
         <script src="./assets/js/vue.js"></script>
-        <script src=".assets/js/script.js"></script>
+        <script src="./assets/js/script.js"></script>
 
   </body>
 </html>
